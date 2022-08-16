@@ -51,3 +51,61 @@
   #root, #__next {
     isolation: isolate;
   }
+
+  body {
+    display: grid;
+  }
+
+.gameboard {
+width: 600px;
+height: 600px;
+/* border: 3px solid black; */
+
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+grid-template-rows: repeat(3, 1fr);
+
+place-self: center;
+}
+
+div[id^="square"] {
+  border: 1px solid black;
+}
+
+#square_0 {
+border-left: none;
+border-top: none;
+
+}
+#square_1 {
+  border-top: none;
+
+}
+#square_2 {
+  border-right: none;
+  border-top: none;
+
+}
+#square_3 {
+  border-left: none;
+
+}
+
+#square_5 {
+  border-right: none;
+
+}
+#square_6 {
+  border-left: none;
+  border-bottom: none;
+
+}
+#square_7 {
+  border-bottom: none;
+
+}
+#square_8 {
+  border-right: none;
+  border-bottom: none;
+
+}
