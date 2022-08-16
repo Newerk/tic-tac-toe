@@ -1,94 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=EB+Garamond:wght@400;700&family=Fredoka+One&display=swap');
+
+
 /*CSS RESET*/
 /*
   1. Use a more-intuitive box-sizing model.
 */
-*, *::before, *::after {
-    box-sizing: border-box;
-  }
-  /*
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
     2. Remove default margin
   */
-  * {
-    margin: 0;
-  }
-  /*
+* {
+  margin: 0;
+}
+
+/*
     3. Allow percentage-based heights in the application
   */
-  html, body {
-    height: 100%;
-  }
-  /*
+html,
+body {
+  height: 100%;
+}
+
+/*
     Typographic tweaks!
     4. Add accessible line-height
     5. Improve text rendering
   */
-  body {
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-  /*
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
     6. Improve media defaults
   */
-  img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
-  }
-  /*
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/*
     7. Remove built-in form typography styles
   */
-  input, button, textarea, select {
-    font: inherit;
-  }
-  /*
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/*
     8. Avoid text overflows
   */
-  p, h1, h2, h3, h4, h5, h6 {
-    overflow-wrap: break-word;
-  }
-  /*
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/*
     9. Create a root stacking context
   */
-  #root, #__next {
-    isolation: isolate;
-  }
+#root,
+#__next {
+  isolation: isolate;
+}
 
-  body {
-    display: grid;
-  }
+body {
+  display: grid;
+}
 
 .gameboard {
   z-index: 2;
-width: 600px;
-height: 600px;
-/* border: 3px solid black; */
+  width: 600px;
+  height: 600px;
 
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-grid-template-rows: repeat(3, 1fr);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 
-place-self: center;
+  place-self: center;
 }
 
 div[id^="square"] {
   display: grid;
-  border: 1px solid black;
+  border: 3px solid black;
   place-content: center;
+  font-size: 110px;
+  font-family: 'Fredoka One', cursive;
+
+}
+
+div[id^="square"]:hover {
+  cursor: pointer;
 }
 
 #square_0 {
-border-left: none;
-border-top: none;
+  border-left: none;
+  border-top: none;
 
 }
+
 #square_1 {
   border-top: none;
 
 }
+
 #square_2 {
   border-right: none;
   border-top: none;
 
 }
+
 #square_3 {
   border-left: none;
 
@@ -98,15 +134,18 @@ border-top: none;
   border-right: none;
 
 }
+
 #square_6 {
   border-left: none;
   border-bottom: none;
 
 }
+
 #square_7 {
   border-bottom: none;
 
 }
+
 #square_8 {
   border-right: none;
   border-bottom: none;

@@ -21,36 +21,39 @@ if player symbols are index's:
  Everytime a player or the computer(will worry about this later) inserts their symbol on the board, it will check for the win conditions
 */
 
+//In my Tic Tac Toe game, the player will always be 'X' and go first, unless they want to
+
 
 //gameboard Module
 const game = (() => {
+    let count = 0
 
     const Gameboard = {
         gameboard:
-            ["X", "X", "O",
-            "O", "X", null,
-            "O", null, "X"],
+                [null, null, null,
+                null, null, null,
+                null, null, null],
+    }
 
+    const _buildBoard = () => {
 
-        buildBoard: function () {
-            let count = 0
-            this.gameboard.forEach(() => {
-                const square = document.getElementById(`square_${count}`);
+        Gameboard.gameboard.forEach(() => {
+            const square = document.getElementById(`square_${count}`);
 
-                if (count !== 9) {
-                    square.textContent = Gameboard.gameboard[count];
-                    count++;
-                }
-
+            square.addEventListener('click', function (e) {
+                e.target.textContent = 'X'
             })
 
-        }
+            if (count !== 9) {
+                square.textContent = Gameboard.gameboard[count];
+                count++;
+            }
+        })
     }
+    _buildBoard();
 
     //controls flow of game. perhaps the winning/tie conditions are placed here
-    const Gameplay = {
-
-    }
+    const Gameplay = {};
 
     return {
         Gameboard,
@@ -58,13 +61,10 @@ const game = (() => {
     }
 })();
 
-game.Gameboard.buildBoard();
 
-const PlayerSymbol = (symbol) => {
-    const getSymbol = () => symbol;
 
-    return { getSymbol }
-}
+
+
 
 // const choseX = PlayerSymbol('X');
 // choseX.getSymbol();
