@@ -57,6 +57,7 @@
   }
 
 .gameboard {
+  z-index: 2;
 width: 600px;
 height: 600px;
 /* border: 3px solid black; */
@@ -69,7 +70,9 @@ place-self: center;
 }
 
 div[id^="square"] {
+  display: grid;
   border: 1px solid black;
+  place-content: center;
 }
 
 #square_0 {

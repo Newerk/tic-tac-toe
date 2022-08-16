@@ -8,32 +8,26 @@ While the minimum number of moves to win a game is five, the maximum number of m
 /*When a space in the gameboard is clicked it will get the symbol of the current player and output it onto the board.
 A player cannot place their symbol more than once per turn. */
 
+/*The symbols should appear on the board based on the index in the game.Gameboard.gameboard index */
+
 //gameboard Module
 const game = (() => {
 
-
-
-
     const Gameboard = {
         gameboard:
-            [null, null, null,
-                null, null, null,
-                null, null, null],
+            ["X", "X", "O",
+            "O", "X", null,
+            "O", null, "X"],
 
 
         buildBoard: function () {
             let count = 0
-            this.gameboard.forEach(el => {
-                el = 0;
+            this.gameboard.forEach(() => {
                 const square = document.getElementById(`square_${count}`);
-                
+
                 if (count !== 9) {
-                    const insertSymbol = () => {
-                        const playerChoice = PlayerInfo('X');
-                        square.textContent = playerChoice.getSymbol();
-                    }
-                    square.addEventListener('click', insertSymbol)
-                    console.log(el);
+                    square.textContent = Gameboard.gameboard[count];
+
                     count++;
                 }
 
@@ -55,14 +49,17 @@ const game = (() => {
 
 game.Gameboard.buildBoard();
 
-const PlayerInfo = (symbol) => {
+const PlayerSymbol = (symbol) => {
     const getSymbol = () => symbol;
 
     return { getSymbol }
 }
 
-// const choseX = PlayerInfo('X');
+// const choseX = PlayerSymbol('X');
 // choseX.getSymbol();
+// const choseO = PlayerSymbol('O');
+// choseO.getSymbol();
+
 
 
 
