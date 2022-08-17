@@ -95,7 +95,7 @@ body {
   place-self: center;
 }
 
-div[id^="square"] {
+.gameboard>div {
   display: grid;
   border: 3px solid black;
   place-content: center;
@@ -104,49 +104,49 @@ div[id^="square"] {
 
 }
 
-div[id^="square"]:hover {
+.gameboard>div:hover {
   cursor: pointer;
 }
 
-#square_0 {
+.gameboard>div[id="0"]{
   border-left: none;
   border-top: none;
 
 }
 
-#square_1 {
+.gameboard>div[id="1"] {
   border-top: none;
 
 }
 
-#square_2 {
+.gameboard>div[id="2"] {
   border-right: none;
   border-top: none;
 
 }
 
-#square_3 {
+.gameboard>div[id="3"] {
   border-left: none;
 
 }
 
-#square_5 {
+.gameboard>div[id="5"] {
   border-right: none;
 
 }
 
-#square_6 {
+.gameboard>div[id="6"] {
   border-left: none;
   border-bottom: none;
 
 }
 
-#square_7 {
+.gameboard>div[id="7"] {
   border-bottom: none;
 
 }
 
-#square_8 {
+.gameboard>div[id="8"] {
   border-right: none;
   border-bottom: none;
 

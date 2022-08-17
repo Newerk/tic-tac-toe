@@ -24,25 +24,51 @@ if player symbols are index's:
 //In my Tic Tac Toe game, the player will always be 'X' and go first, unless they want to
 
 
-//gameboard Module
-const game = (() => {
+//Anonymous Module
+(() => {
     let count = 0
+
+
 
     const Gameboard = {
         gameboard:
                 [null, null, null,
-                null, null, null,
+                null, null, 'O',
                 null, null, null],
     }
 
+        //these numbers represent the indexs of the TTT board
+        const winConditions = {
+            //horizontal wins
+            h1: [0,1,2],
+            h2: [3,4,5],
+            h3: [6,7,8],
+
+            //verticle wins
+            v1: [0,3,6],
+            v2: [1,4,7],
+            v3: [2,5,8],
+
+            //diagnol wins
+            d1: [0,4,8],
+            d2: [2,4,6],
+
+            checkWinCondition: function name(array) {
+                alert("YOU WON!");
+            }
+        };
+
     const _buildBoard = () => {
-
         Gameboard.gameboard.forEach(() => {
-            const square = document.getElementById(`square_${count}`);
 
+            const square = document.getElementById(`${count}`);
             square.addEventListener('click', function (e) {
-                e.target.textContent = 'X'
+                e.target.textContent = 'X';
+                Gameboard.gameboard.splice(e.target.id, 1, 'X');
+
+                console.log(Gameboard.gameboard);
             })
+            _checkWinCondition(Gameboard.gameboard);
 
             if (count !== 9) {
                 square.textContent = Gameboard.gameboard[count];
@@ -52,26 +78,16 @@ const game = (() => {
     }
     _buildBoard();
 
-    //controls flow of game. perhaps the winning/tie conditions are placed here
-    const Gameplay = {};
-
-    return {
-        Gameboard,
-        Gameplay
-    }
 })();
 
-
-
-
-
-
-// const choseX = PlayerSymbol('X');
-// choseX.getSymbol();
-// const choseO = PlayerSymbol('O');
-// choseO.getSymbol();
-
-
-
-
 // console.log(game.Gameboard.gameboard);
+
+
+//a function that will check if a spot if occupied
+        // if (symbolIndex !== null) {
+        //     //do nothing if there is a a symbol already occupying a spot
+        //     console.log('OCCUPIED');
+        //     // return;
+        // } else {
+        //     console.log('SPOT EMPTY');
+        // }
