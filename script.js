@@ -43,9 +43,6 @@ if player symbols are index's:
             square.addEventListener('click', function (e) {
                 e.target.textContent = 'X';
                 Gameboard.gameboard.splice(e.target.id, 1, 'X');
-
-                console.log(Gameboard.gameboard);
-
                 gameState.checkWinCondition(Gameboard.gameboard)
             })
 
@@ -79,11 +76,23 @@ const gameState = (() => {
 
     const checkWinCondition = (arr) => {
         for (const key in winConditions) {
-            if (arr.at(winConditions[key][0]) === "X" &&
-                arr.at(winConditions[key][1]) === "X" &&
-                arr.at(winConditions[key][2]) === "X") {
+            if (arr[(winConditions[key][0])] === "X" &&
+                arr[(winConditions[key][1])] === "X" &&
+                arr[(winConditions[key][2])] === "X") {
                 console.log('YOU WIN');
-            }
+
+            } else
+                if (arr[(winConditions[key][0])] === "O" &&
+                    arr[(winConditions[key][1])] === "O" &&
+                    arr[(winConditions[key][2])] === "O") {
+                    console.log('YOU LOSE');
+
+                }
+
+            //CHECKS IF TIE
+            // else if (condition) {
+            //     console.log('YOU WIN');
+            // }
 
         }
     }
@@ -92,15 +101,6 @@ const gameState = (() => {
         checkWinCondition,
     }
 })();
-
-
-// console.log(gameState.winConditions.d1.at(0));
-
-
-
-
-// console.log(game.Gameboard.gameboard);
-
 
 //a function that will check if a spot if occupied
         // if (symbolIndex !== null) {
