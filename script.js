@@ -26,24 +26,37 @@ if player symbols are index's:
 
 //Anonymous Module
 (() => {
-    let count = 0
+    let count = 0;
+    let round = 1;
 
     const Gameboard = {
         gameboard:
-            [null, null, null,
+                [null, null, null,
                 null, null, 'O',
                 null, null, null],
     }
 
 
     const _buildBoard = () => {
+
+        const roundTracker = document.querySelector('round');
+        let roundSpan = document.createElement('span');
+        roundSpan.textContent = round;
+        roundTracker.appendChild(roundSpan);
+
         Gameboard.gameboard.forEach(() => {
 
             const square = document.getElementById(`${count}`);
+            
+
+
             square.addEventListener('click', function (e) {
+                roundSpan.textContent = round+=1;
+
                 e.target.textContent = 'X';
                 Gameboard.gameboard.splice(e.target.id, 1, 'X');
-                gameState.checkWinCondition(Gameboard.gameboard)
+                gameState.checkWinCondition(Gameboard.gameboard);
+
             })
 
             if (count !== 9) {
@@ -74,12 +87,15 @@ const gameState = (() => {
         d2: [2, 4, 6],
     }
 
+
+    //should allow user to restart game 
     const checkWinCondition = (arr) => {
         for (const key in winConditions) {
             if (arr[(winConditions[key][0])] === "X" &&
                 arr[(winConditions[key][1])] === "X" &&
                 arr[(winConditions[key][2])] === "X") {
-                console.log('YOU WIN');
+                alert('YOU WIN');
+
 
             } else
                 if (arr[(winConditions[key][0])] === "O" &&
@@ -90,8 +106,8 @@ const gameState = (() => {
                 }
 
             //CHECKS IF TIE
-            // else if (condition) {
-            //     console.log('YOU WIN');
+            // else if (round === 9) {
+            //     console.log('ITS A TIE');
             // }
 
         }
