@@ -28,35 +28,13 @@ if player symbols are index's:
 (() => {
     let count = 0
 
-
-
     const Gameboard = {
         gameboard:
-                [null, null, null,
+            [null, null, null,
                 null, null, 'O',
                 null, null, null],
     }
 
-        //these numbers represent the indexs of the TTT board
-        const winConditions = {
-            //horizontal wins
-            h1: [0,1,2],
-            h2: [3,4,5],
-            h3: [6,7,8],
-
-            //verticle wins
-            v1: [0,3,6],
-            v2: [1,4,7],
-            v3: [2,5,8],
-
-            //diagnol wins
-            d1: [0,4,8],
-            d2: [2,4,6],
-
-            checkWinCondition: function name(array) {
-                alert("YOU WON!");
-            }
-        };
 
     const _buildBoard = () => {
         Gameboard.gameboard.forEach(() => {
@@ -67,8 +45,9 @@ if player symbols are index's:
                 Gameboard.gameboard.splice(e.target.id, 1, 'X');
 
                 console.log(Gameboard.gameboard);
+
+                gameState.checkWinCondition(Gameboard.gameboard)
             })
-            _checkWinCondition(Gameboard.gameboard);
 
             if (count !== 9) {
                 square.textContent = Gameboard.gameboard[count];
@@ -79,6 +58,46 @@ if player symbols are index's:
     _buildBoard();
 
 })();
+
+const gameState = (() => {
+    //these numbers represent the indexs of the TTT board
+    const winConditions = {
+        //horizontal wins
+        h1: [0, 1, 2],
+        h2: [3, 4, 5],
+        h3: [6, 7, 8],
+
+        //verticle wins
+        v1: [0, 3, 6],
+        v2: [1, 4, 7],
+        v3: [2, 5, 8],
+
+        //diagnol wins
+        d1: [0, 4, 8],
+        d2: [2, 4, 6],
+    }
+
+    const checkWinCondition = (arr) => {
+        for (const key in winConditions) {
+            if (arr.at(winConditions[key][0]) === "X" &&
+                arr.at(winConditions[key][1]) === "X" &&
+                arr.at(winConditions[key][2]) === "X") {
+                console.log('YOU WIN');
+            }
+
+        }
+    }
+
+    return {
+        checkWinCondition,
+    }
+})();
+
+
+// console.log(gameState.winConditions.d1.at(0));
+
+
+
 
 // console.log(game.Gameboard.gameboard);
 
