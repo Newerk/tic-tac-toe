@@ -31,9 +31,26 @@ if player symbols are index's:
 
     const Gameboard = {
         gameboard:
-                [null, null, null,
+            [null, null, null,
                 null, null, 'O',
                 null, null, null],
+    }
+
+    const _computerPlay = () => {
+const ranIndex = Math.floor((Math.random() * 8));
+
+        console.log(`Index_${Gameboard.gameboard.indexOf(Gameboard.gameboard[ranIndex])}: ${Gameboard.gameboard[ranIndex]}`);
+
+        // const cpuSquare = document.getElementById(id);
+
+        // if (Gameboard.gameboard[Math.floor((Math.random() * 8))] === null) {
+        //     Gameboard.gameboard.splice(Math.floor((Math.random() * 8)), 1, 'O');
+        //     cpuSquare.textContent = 'O';
+            console.log(Gameboard.gameboard);
+
+        // } else {
+        //     return;
+        // }
     }
 
 
@@ -47,15 +64,14 @@ if player symbols are index's:
         Gameboard.gameboard.forEach(() => {
 
             const square = document.getElementById(`${count}`);
-            
-
 
             square.addEventListener('click', function (e) {
-                roundSpan.textContent = round+=1;
+                roundSpan.textContent = round += 1;
 
                 e.target.textContent = 'X';
                 Gameboard.gameboard.splice(e.target.id, 1, 'X');
                 gameState.checkWinCondition(Gameboard.gameboard);
+                _computerPlay();
 
             })
 
@@ -94,14 +110,14 @@ const gameState = (() => {
             if (arr[(winConditions[key][0])] === "X" &&
                 arr[(winConditions[key][1])] === "X" &&
                 arr[(winConditions[key][2])] === "X") {
-                alert('YOU WIN');
+                console.log('YOU WIN');
 
 
             } else
                 if (arr[(winConditions[key][0])] === "O" &&
                     arr[(winConditions[key][1])] === "O" &&
                     arr[(winConditions[key][2])] === "O") {
-                    console.log('YOU LOSE');
+                    // console.log('YOU LOSE');
 
                 }
 
