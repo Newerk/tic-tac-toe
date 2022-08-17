@@ -32,25 +32,38 @@ if player symbols are index's:
     const Gameboard = {
         gameboard:
             [null, null, null,
-                null, null, 'O',
+                null, null, null,
                 null, null, null],
     }
 
     const _computerPlay = () => {
-const ranIndex = Math.floor((Math.random() * 8));
+        let randomIndex = Math.floor((Math.random() * 8));
+        let square = document.getElementById(randomIndex);
 
-        console.log(`Index_${Gameboard.gameboard.indexOf(Gameboard.gameboard[ranIndex])}: ${Gameboard.gameboard[ranIndex]}`);
+        switch (Gameboard.gameboard[randomIndex]) {
+            case null:
+                console.log('EMPTY SPOT, YAY!');
+                square.textContent = 'O';
+                Gameboard.gameboard[randomIndex] = 'O';
+                gameState.checkWinCondition(Gameboard.gameboard);
 
-        // const cpuSquare = document.getElementById(id);
 
-        // if (Gameboard.gameboard[Math.floor((Math.random() * 8))] === null) {
-        //     Gameboard.gameboard.splice(Math.floor((Math.random() * 8)), 1, 'O');
-        //     cpuSquare.textContent = 'O';
-            console.log(Gameboard.gameboard);
+                break;
 
-        // } else {
-        //     return;
-        // }
+            case 'X':
+                console.log('SPOT OCCUPIED :(');
+                return _computerPlay();
+
+
+            case 'O':
+                console.log('SPOT OCCUPIED :(');
+                return _computerPlay();
+
+        }
+
+
+        console.log(`Index_${Gameboard.gameboard.indexOf(Gameboard.gameboard[randomIndex])}: ${Gameboard.gameboard[randomIndex]}`);
+        console.log(Gameboard.gameboard);
     }
 
 
@@ -66,12 +79,19 @@ const ranIndex = Math.floor((Math.random() * 8));
             const square = document.getElementById(`${count}`);
 
             square.addEventListener('click', function (e) {
-                roundSpan.textContent = round += 1;
+                if (e.target.textContent === 'X' ||
+                e.target.textContent === 'O') {
+                    console.log("CANT DO THAT")
+                } else {
+                    roundSpan.textContent = round += 1;
+                    e.target.textContent = 'X';
+                    Gameboard.gameboard.splice(e.target.id, 1, 'X');
+                    gameState.checkWinCondition(Gameboard.gameboard);
+                    _computerPlay();
+                }
 
-                e.target.textContent = 'X';
-                Gameboard.gameboard.splice(e.target.id, 1, 'X');
-                gameState.checkWinCondition(Gameboard.gameboard);
-                _computerPlay();
+                // console.log(Gameboard.gameboard);
+
 
             })
 
@@ -117,7 +137,7 @@ const gameState = (() => {
                 if (arr[(winConditions[key][0])] === "O" &&
                     arr[(winConditions[key][1])] === "O" &&
                     arr[(winConditions[key][2])] === "O") {
-                    // console.log('YOU LOSE');
+                    console.log('YOU LOSE');
 
                 }
 
