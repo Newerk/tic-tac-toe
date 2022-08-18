@@ -4,7 +4,7 @@
 
     const Gameboard = {
         gameboard:
-                [null, null, null,
+            [null, null, null,
                 null, null, null,
                 null, null, null],
     }
@@ -18,7 +18,7 @@
                 console.log('EMPTY SPOT, YAY!');
                 square.textContent = 'O';
                 Gameboard.gameboard[randomIndex] = 'O';
-                gameState.checkWinCondition(Gameboard.gameboard);
+                // gameState.checkWinCondition(Gameboard.gameboard);
                 break;
 
             case 'X':
@@ -29,8 +29,6 @@
                 console.log('SPOT OCCUPIED :(');
                 return _computerPlay();
         }
-        // console.log(`Index_${Gameboard.gameboard.indexOf(Gameboard.gameboard[randomIndex])}: ${Gameboard.gameboard[randomIndex]}`);
-        // console.log(Gameboard.gameboard);
     }
 
 
@@ -42,6 +40,7 @@
 
         Gameboard.gameboard.forEach(() => {
             const square = document.getElementById(`${count}`);
+            square.setAttribute('style', 'transistion: 1s; opacity: 1;')
 
             square.addEventListener('click', function (e) {
                 if (e.target.textContent === 'X' ||
@@ -52,8 +51,9 @@
                     roundSpan.textContent = round += 1;
                     e.target.textContent = 'X';
                     Gameboard.gameboard.splice(e.target.id, 1, 'X');
-                    gameState.checkWinCondition(Gameboard.gameboard);
                     _computerPlay();
+                    gameState.checkWinCondition(Gameboard.gameboard);
+
                 }
             })
 
@@ -67,7 +67,7 @@
 })();
 
 const gameState = (() => {
-    //these numbers represent the indexs of the TTT board
+    //these numbers represent the indexes of the TTT board
     const winConditions = {
         //horizontal wins
         h1: [0, 1, 2],
@@ -87,19 +87,38 @@ const gameState = (() => {
 
     //should allow user to restart game 
     const checkWinCondition = (arr) => {
+        //function that builds Pop-up for winning or losing round
+        const _popupBox = (outcome) => {
+            const popup = document.createElement('div');
+            popup.className = 'popup-box';
+            
+            const result = document.createElement('div');
+            result.id = 'win-lose';
+            result.textContent = outcome;
+
+            const replayBtn = document.createElement('button');
+            replayBtn.id = 'play-again-btn';
+
+
+            popup.appendChild(result);
+            popup.appendChild(replayBtn);
+
+            document.body.appendChild(popup);
+
+        };
+
+
         for (const key in winConditions) {
             if (arr[(winConditions[key][0])] === "X" &&
                 arr[(winConditions[key][1])] === "X" &&
                 arr[(winConditions[key][2])] === "X") {
-                console.log('YOU WIN');
-
-
-            } 
+                _popupBox('YOU WIN!')
+            }
             else
                 if (arr[(winConditions[key][0])] === "O" &&
                     arr[(winConditions[key][1])] === "O" &&
                     arr[(winConditions[key][2])] === "O") {
-                    console.log('YOU LOSE');
+                    _popupBox('YOU LOSE')
 
                 }
 
