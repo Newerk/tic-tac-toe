@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=EB+Garamond:wght@400;700&family=Fredoka+One&display=swap');
 
+:root {
+  /* --winning_sqaures: rgb(255, 45, 45); */
+}
+
 
 /*CSS RESET*/
 /*
@@ -100,10 +104,8 @@ body {
   border: 3px solid black;
   place-content: center;
   font-family: 'Fredoka One', cursive;
-  transition: 1s;
+  transition: .5s;
   font-size: 110px;
-  opacity: 1;
-
 }
 
 .gameboard>div:hover {
@@ -118,17 +120,22 @@ body {
 .gameboard>div[id="0"]{
   border-left: none;
   border-top: none;
+  background-color: var(--winning_sqaures);
+
 
 }
 
 .gameboard>div[id="1"] {
   border-top: none;
+  background-color: var(--winning_sqaures);
 
 }
 
 .gameboard>div[id="2"] {
   border-right: none;
   border-top: none;
+  background-color: var(--winning_sqaures);
+
 
 }
 
@@ -162,11 +169,24 @@ body {
 .popup-box {
   width: 25rem;
   height: 40rem;
-  background-color: bisque;
-  z-index: 3;
+  background-color: rgb(215, 215, 215);
   position: absolute;
   place-self: center;
   border: 2px solid black;
   border-radius: 1.5rem;
   opacity: .8;
+}
+
+.overlay {
+  transition: .5s;
+
+  position: absolute; /* Positioning and size */
+  display: grid;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(128,128,128,0.5); /* color */
+  /* display: none; making it hidden by default */
+  z-index: 2;
 }

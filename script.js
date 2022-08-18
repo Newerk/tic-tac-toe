@@ -40,8 +40,6 @@
 
         Gameboard.gameboard.forEach(() => {
             const square = document.getElementById(`${count}`);
-            square.setAttribute('style', 'transistion: 1s; opacity: 1;')
-
             square.addEventListener('click', function (e) {
                 if (e.target.textContent === 'X' ||
                     e.target.textContent === 'O') {
@@ -87,38 +85,38 @@ const gameState = (() => {
 
     //should allow user to restart game 
     const checkWinCondition = (arr) => {
-        //function that builds Pop-up for winning or losing round
-        const _popupBox = (outcome) => {
-            const popup = document.createElement('div');
-            popup.className = 'popup-box';
-            
-            const result = document.createElement('div');
-            result.id = 'win-lose';
-            result.textContent = outcome;
-
-            const replayBtn = document.createElement('button');
-            replayBtn.id = 'play-again-btn';
-
-
-            popup.appendChild(result);
-            popup.appendChild(replayBtn);
-
-            document.body.appendChild(popup);
-
-        };
-
-
         for (const key in winConditions) {
+            const square1 = document.getElementById(winConditions[key][0]);
+            const square2 = document.getElementById(winConditions[key][1]);
+            const square3 = document.getElementById(winConditions[key][2]);
+            const winColor = [174, 255, 45];
+
+
             if (arr[(winConditions[key][0])] === "X" &&
                 arr[(winConditions[key][1])] === "X" &&
                 arr[(winConditions[key][2])] === "X") {
-                _popupBox('YOU WIN!')
+                square1.setAttribute('style', `background-color: rgb(${winColor})`)
+                square2.setAttribute('style', `background-color: rgb(${winColor})`)
+                square3.setAttribute('style', `background-color: rgb(${winColor})`)
+
+
+                popUpMenu.popupBox('YOU WIN!');
+                gameOver = true;
+                console.log(gameOver);
+                // _deleteClickEvent();
             }
             else
                 if (arr[(winConditions[key][0])] === "O" &&
                     arr[(winConditions[key][1])] === "O" &&
                     arr[(winConditions[key][2])] === "O") {
-                    _popupBox('YOU LOSE')
+                    square1.setAttribute('style', 'background-color: rgb(255, 45, 45)')
+                    square2.setAttribute('style', 'background-color: rgb(255, 45, 45)')
+                    square3.setAttribute('style', 'background-color: rgb(255, 45, 45)')
+
+                    popUpMenu.popupBox('YOU LOSE');
+                    gameOver = true;
+                    // _deleteClickEvent();
+
 
                 }
 
@@ -129,5 +127,47 @@ const gameState = (() => {
 
     return {
         checkWinCondition,
+        gameOver,
+    }
+})();
+
+
+const popUpMenu = (() => {
+    const resetPage = () => {
+        location.reload();
+    }
+
+    //function that builds Pop-up for winning or losing round
+    const popupBox = (outcome) => {
+        const overlay = document.createElement('div');
+        overlay.className = 'overlay';
+
+
+        const popup = document.createElement('div');
+        popup.className = 'popup-box';
+
+        const result = document.createElement('div');
+        result.id = 'win-lose';
+        result.textContent = outcome;
+
+        const replayBtn = document.createElement('button');
+        replayBtn.id = 'play-again-btn';
+        replayBtn.textContent = 'Play Again?';
+
+        replayBtn.addEventListener('click', resetPage);
+
+
+
+        popup.appendChild(result);
+        popup.appendChild(replayBtn);
+
+        overlay.appendChild(popup)
+
+        document.body.appendChild(overlay);
+    };
+
+
+    return {
+        popupBox
     }
 })();
