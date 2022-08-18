@@ -89,33 +89,28 @@ const gameState = (() => {
             const square1 = document.getElementById(winConditions[key][0]);
             const square2 = document.getElementById(winConditions[key][1]);
             const square3 = document.getElementById(winConditions[key][2]);
-            const winColor = [174, 255, 45];
-
+            const winColor = '#AEFF2D';
+            const loseColor = '#FF2D2D';
 
             if (arr[(winConditions[key][0])] === "X" &&
                 arr[(winConditions[key][1])] === "X" &&
                 arr[(winConditions[key][2])] === "X") {
-                square1.setAttribute('style', `background-color: rgb(${winColor})`)
-                square2.setAttribute('style', `background-color: rgb(${winColor})`)
-                square3.setAttribute('style', `background-color: rgb(${winColor})`)
+                square1.setAttribute('style', `background-color: ${winColor}`)
+                square2.setAttribute('style', `background-color: ${winColor}`)
+                square3.setAttribute('style', `background-color: ${winColor}`)
 
 
                 popUpMenu.popupBox('YOU WIN!');
-                gameOver = true;
-                console.log(gameOver);
-                // _deleteClickEvent();
             }
             else
                 if (arr[(winConditions[key][0])] === "O" &&
                     arr[(winConditions[key][1])] === "O" &&
                     arr[(winConditions[key][2])] === "O") {
-                    square1.setAttribute('style', 'background-color: rgb(255, 45, 45)')
-                    square2.setAttribute('style', 'background-color: rgb(255, 45, 45)')
-                    square3.setAttribute('style', 'background-color: rgb(255, 45, 45)')
-
+                        square1.setAttribute('style', `background-color: ${loseColor}`)
+                        square2.setAttribute('style', `background-color: ${loseColor}`)
+                        square3.setAttribute('style', `background-color: ${loseColor}`)
+        
                     popUpMenu.popupBox('YOU LOSE');
-                    gameOver = true;
-                    // _deleteClickEvent();
 
 
                 }
@@ -127,7 +122,6 @@ const gameState = (() => {
 
     return {
         checkWinCondition,
-        gameOver,
     }
 })();
 
