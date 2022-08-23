@@ -112,12 +112,12 @@ body {
   cursor: pointer;
 }
 
-.gameboard>div:active{
+.gameboard>div:active {
   font-size: 110px;
 
 }
 
-.gameboard>div[id="0"]{
+.gameboard>div[id="0"] {
   border-left: none;
   border-top: none;
   background-color: var(--winning_sqaures);
@@ -175,18 +175,42 @@ body {
   border: 2px solid black;
   border-radius: 1.5rem;
   opacity: .8;
+  display: flex;
+  flex-direction: column;
+  transition: .5s;
+
+  justify-content: space-around;
+  align-items: center;
 }
 
 .overlay {
-  transition: .5s;
-
-  position: absolute; /* Positioning and size */
+  font-family: 'Fredoka One', cursive;
+  position: absolute;
+  /* Positioning and size */
   display: grid;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(128,128,128,0.5); /* color */
-  /* display: none; making it hidden by default */
+  background-color: rgba(128, 128, 128, 0.5);
+  /* color */
   z-index: 2;
 }
+
+#win-lose {
+  
+}
+
+#play-again-btn {
+  height: 5rem;
+  width: 100%;
+  border: solid black;
+  border-left: none;
+  border-right: none;
+
+}
+
+#play-again-btn:hover {
+background-color: rgb(255, 114, 49);
+}
+

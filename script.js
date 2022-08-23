@@ -1,4 +1,4 @@
-(() => {
+const game = (() => {
     let count = 0;
     let round = 1;
 
@@ -10,24 +10,56 @@
     }
 
     const _computerPlay = () => {
+        let blankSpaces =
+            [0, 1, 2,
+                3, 4, 5,
+                6, 7, 8];
+
         let randomIndex = Math.floor((Math.random() * 8));
         let square = document.getElementById(randomIndex);
+
+        const getOccupiedSpots = () => {
+            let blank = [];
+            let indexCount = 0;
+
+            for (const element of Gameboard.gameboard) {
+                if (element === null) {
+                    indexCount++;
+                    continue;                    
+                }
+                blank.push(indexCount);
+                indexCount++;
+
+            }
+
+            console.log(`Occupied Indexes: ${blank}`)
+        }
 
         switch (Gameboard.gameboard[randomIndex]) {
             case null:
                 console.log('EMPTY SPOT, YAY!');
-                square.textContent = 'O';
                 Gameboard.gameboard[randomIndex] = 'O';
-                // gameState.checkWinCondition(Gameboard.gameboard);
+                square.textContent = 'O';
+                gameState.checkWinCondition(Gameboard.gameboard);
                 break;
 
+            //the problem that happen is that when _computerPlay is ran again, it will choose a random index from the entire array. 
+            //what needs to be changed is the random method only searching in an array of indexs that is null. So when ever a spot is chosen by the 
+            //player or computer, the array needs to pop out those used indexes and only store indexes with a null value
             case 'X':
+
                 console.log('SPOT OCCUPIED :(');
-                return _computerPlay();
+
+                getOccupiedSpots();
+                // console.log(`all occupied spots so far: ${}`)
+                break;
 
             case 'O':
+
                 console.log('SPOT OCCUPIED :(');
-                return _computerPlay();
+                getOccupiedSpots();
+                // console.log(`all occupied spots so far: ${getOccupiedSpots()}`)
+                break;
         }
     }
 
@@ -52,6 +84,8 @@
                     _computerPlay();
                     gameState.checkWinCondition(Gameboard.gameboard);
 
+
+
                 }
             })
 
@@ -62,6 +96,10 @@
         })
     }
     _buildBoard();
+
+    return {
+        Gameboard
+    }
 })();
 
 const gameState = (() => {
@@ -85,6 +123,9 @@ const gameState = (() => {
 
     //should allow user to restart game 
     const checkWinCondition = (arr) => {
+
+        const gameboard = document.querySelectorAll('.gameboard');
+
         for (const key in winConditions) {
             const square1 = document.getElementById(winConditions[key][0]);
             const square2 = document.getElementById(winConditions[key][1]);
@@ -92,7 +133,11 @@ const gameState = (() => {
             const winColor = '#AEFF2D';
             const loseColor = '#FF2D2D';
 
-            if (arr[(winConditions[key][0])] === "X" &&
+            if (!game.Gameboard.gameboard.includes(null)) {
+                popUpMenu.popupBox('ITS A TIE');
+
+            }
+            else if (arr[(winConditions[key][0])] === "X" &&
                 arr[(winConditions[key][1])] === "X" &&
                 arr[(winConditions[key][2])] === "X") {
                 square1.setAttribute('style', `background-color: ${winColor}`)
@@ -106,16 +151,15 @@ const gameState = (() => {
                 if (arr[(winConditions[key][0])] === "O" &&
                     arr[(winConditions[key][1])] === "O" &&
                     arr[(winConditions[key][2])] === "O") {
-                        square1.setAttribute('style', `background-color: ${loseColor}`)
-                        square2.setAttribute('style', `background-color: ${loseColor}`)
-                        square3.setAttribute('style', `background-color: ${loseColor}`)
-        
+                    square1.setAttribute('style', `background-color: ${loseColor}`)
+                    square2.setAttribute('style', `background-color: ${loseColor}`)
+                    square3.setAttribute('style', `background-color: ${loseColor}`)
+
                     popUpMenu.popupBox('YOU LOSE');
 
 
                 }
 
-            // CHECKS IF TIE
 
         }
     }
@@ -136,7 +180,6 @@ const popUpMenu = (() => {
         const overlay = document.createElement('div');
         overlay.className = 'overlay';
 
-
         const popup = document.createElement('div');
         popup.className = 'popup-box';
 
@@ -149,8 +192,6 @@ const popUpMenu = (() => {
         replayBtn.textContent = 'Play Again?';
 
         replayBtn.addEventListener('click', resetPage);
-
-
 
         popup.appendChild(result);
         popup.appendChild(replayBtn);
