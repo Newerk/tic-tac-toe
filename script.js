@@ -1,6 +1,9 @@
 const game = (() => {
     let count = 0;
     let round = 1;
+    let indexes = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+    let indexCount = 0;
 
     const Gameboard = {
         gameboard:
@@ -9,59 +12,61 @@ const game = (() => {
                 null, null, null],
     }
 
-    const _computerPlay = () => {
-        let blankSpaces =
-            [0, 1, 2,
-                3, 4, 5,
-                6, 7, 8];
+    // random will choose from a list of remaining index. what ever index it lands on, that index will be searched in the gameboard, and be replaced with O. the chosen index will also be removed from the list
+    const _computerPlay = (userClickedIndex) => {
 
-        let randomIndex = Math.floor((Math.random() * 8));
-        let square = document.getElementById(randomIndex);
+        //removed the the index based on where the user clicked to input their symbol
+        // indexes.splice(indexes.indexOf(userClickedIndex),1)
+        
+        console.log('index of userclicked: ' +indexes.indexOf(parseInt(userClickedIndex)))
+        // console.log(userClickedIndex);
+        console.log(indexes);
 
-        const getOccupiedSpots = () => {
-            let blank = [];
-            let indexCount = 0;
 
-            for (const element of Gameboard.gameboard) {
-                if (element === null) {
-                    indexCount++;
-                    continue;                    
-                }
-                blank.push(indexCount);
-                indexCount++;
+        let randomNum = Math.floor(Math.random() * indexes.length);
+        const square = document.getElementById(`${randomNum}`);
 
+        //location the computer will play at
+        let chosenIndex = indexes[randomNum];
+
+
+
+        for (const iterator of Gameboard.gameboard) {
+            if (Gameboard.gameboard[chosenIndex] === null) {
+                Gameboard.gameboard[chosenIndex] = 'O';
+                square.textContent = 'O';
+                indexes.splice(indexes.indexOf(chosenIndex), 1); 
             }
 
-            console.log(`Occupied Indexes: ${blank}`)
+
+            console.log(`iterator: ${iterator}  index: ${indexCount}`);
+            // console.log(`indexes size = ${indexes.length}`)
+            indexCount++;
+
         }
+        // console.log(`remaining unoccupied indexes: ${indexes}`)
 
-        switch (Gameboard.gameboard[randomIndex]) {
-            case null:
-                console.log('EMPTY SPOT, YAY!');
-                Gameboard.gameboard[randomIndex] = 'O';
-                square.textContent = 'O';
-                gameState.checkWinCondition(Gameboard.gameboard);
-                break;
+        console.log('----------------');
 
-            //the problem that happen is that when _computerPlay is ran again, it will choose a random index from the entire array. 
-            //what needs to be changed is the random method only searching in an array of indexs that is null. So when ever a spot is chosen by the 
-            //player or computer, the array needs to pop out those used indexes and only store indexes with a null value
-            case 'X':
+        // if (Gameboard.gameboard[chosenIndex] !== null) {
+        //     console.log('CPU: spot occupied, choosing new location')
+        //     indexes.splice(indexes.indexOf(chosenIndex), 1);
+        //     _computerPlay();
+        // } else {
+        //     Gameboard.gameboard[chosenIndex] = 'O';
+        //     square.textContent = 'O';
+        //     indexes.splice(indexes.indexOf(chosenIndex), 1);
+        // }
 
-                console.log('SPOT OCCUPIED :(');
 
-                getOccupiedSpots();
-                // console.log(`all occupied spots so far: ${}`)
-                break;
+        // console.log(`random num: ${randomNum}`);
+        // console.log(`chosen index: ${chosenIndex}`);
+        // console.log(`indexes: ${indexes}`)
 
-            case 'O':
 
-                console.log('SPOT OCCUPIED :(');
-                getOccupiedSpots();
-                // console.log(`all occupied spots so far: ${getOccupiedSpots()}`)
-                break;
-        }
+        indexCount = 0;
     }
+
 
 
     const _buildBoard = () => {
@@ -81,7 +86,7 @@ const game = (() => {
                     roundSpan.textContent = round += 1;
                     e.target.textContent = 'X';
                     Gameboard.gameboard.splice(e.target.id, 1, 'X');
-                    _computerPlay();
+                    _computerPlay(e.target.id);
                     gameState.checkWinCondition(Gameboard.gameboard);
 
 
