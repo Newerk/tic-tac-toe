@@ -13,58 +13,37 @@ const game = (() => {
     }
 
     // random will choose from a list of remaining index. what ever index it lands on, that index will be searched in the gameboard, and be replaced with O. the chosen index will also be removed from the list
-    const _computerPlay = (userClickedIndex) => {
-
-        //removed the the index based on where the user clicked to input their symbol
-        // indexes.splice(indexes.indexOf(userClickedIndex),1)
-        
-        console.log('index of userclicked: ' +indexes.indexOf(parseInt(userClickedIndex)))
-        // console.log(userClickedIndex);
-        console.log(indexes);
+    const _computerPlay = () => {
+        gameState.checkWinCondition(Gameboard.gameboard);
 
 
-        let randomNum = Math.floor(Math.random() * indexes.length);
-        const square = document.getElementById(`${randomNum}`);
+        let randomNum = Math.floor(Math.random() * indexes.length) + 1;
 
-        //location the computer will play at
+        //index location the computer will play at on the indexes list
         let chosenIndex = indexes[randomNum];
 
+        const square = document.getElementById(`${chosenIndex}`);
 
 
-        for (const iterator of Gameboard.gameboard) {
-            if (Gameboard.gameboard[chosenIndex] === null) {
-                Gameboard.gameboard[chosenIndex] = 'O';
-                square.textContent = 'O';
-                indexes.splice(indexes.indexOf(chosenIndex), 1); 
-            }
+        if (Gameboard.gameboard[chosenIndex] === null) {
+            console.log(`CPU: empty spot`)
+            square.textContent = 'O';
+            Gameboard.gameboard[chosenIndex] = 'O';
+            indexes.splice(indexes.indexOf(chosenIndex), 1);
 
-
-            console.log(`iterator: ${iterator}  index: ${indexCount}`);
-            // console.log(`indexes size = ${indexes.length}`)
-            indexCount++;
+        } else if (indexes.length === 0) {
+            return;
+        }
+        else {
+            console.log(`CPU: occupied spot`)
+            _computerPlay();
 
         }
-        // console.log(`remaining unoccupied indexes: ${indexes}`)
 
-        console.log('----------------');
-
-        // if (Gameboard.gameboard[chosenIndex] !== null) {
-        //     console.log('CPU: spot occupied, choosing new location')
-        //     indexes.splice(indexes.indexOf(chosenIndex), 1);
-        //     _computerPlay();
-        // } else {
-        //     Gameboard.gameboard[chosenIndex] = 'O';
-        //     square.textContent = 'O';
-        //     indexes.splice(indexes.indexOf(chosenIndex), 1);
-        // }
+        console.log(`indexes length: ${indexes.length}`)
 
 
-        // console.log(`random num: ${randomNum}`);
-        // console.log(`chosen index: ${chosenIndex}`);
-        // console.log(`indexes: ${indexes}`)
 
-
-        indexCount = 0;
     }
 
 
@@ -78,15 +57,21 @@ const game = (() => {
         Gameboard.gameboard.forEach(() => {
             const square = document.getElementById(`${count}`);
             square.addEventListener('click', function (e) {
+                if (indexes.length === 1) {
+                    console.log(`do nothing`)
+                }
+
                 if (e.target.textContent === 'X' ||
                     e.target.textContent === 'O') {
                     console.log("CANT DO THAT")
 
                 } else {
+
                     roundSpan.textContent = round += 1;
                     e.target.textContent = 'X';
-                    Gameboard.gameboard.splice(e.target.id, 1, 'X');
-                    _computerPlay(e.target.id);
+                    Gameboard.gameboard.splice(parseInt(e.target.id), 1, 'X');
+                    indexes.splice(indexes.indexOf(parseInt(e.target.id)), 1);
+                    _computerPlay();
                     gameState.checkWinCondition(Gameboard.gameboard);
 
 
@@ -138,11 +123,7 @@ const gameState = (() => {
             const winColor = '#AEFF2D';
             const loseColor = '#FF2D2D';
 
-            if (!game.Gameboard.gameboard.includes(null)) {
-                popUpMenu.popupBox('ITS A TIE');
-
-            }
-            else if (arr[(winConditions[key][0])] === "X" &&
+            if (arr[(winConditions[key][0])] === "X" &&
                 arr[(winConditions[key][1])] === "X" &&
                 arr[(winConditions[key][2])] === "X") {
                 square1.setAttribute('style', `background-color: ${winColor}`)
@@ -163,7 +144,11 @@ const gameState = (() => {
                     popUpMenu.popupBox('YOU LOSE');
 
 
+                }else {
+                    popUpMenu.popupBox('ITS A TIE!');
+
                 }
+
 
 
         }
