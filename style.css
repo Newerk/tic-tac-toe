@@ -97,6 +97,7 @@ body {
   grid-template-rows: repeat(3, 1fr);
 
   place-self: center;
+  position: absolute;
 }
 
 .gameboard>div {
@@ -198,7 +199,8 @@ body {
 }
 
 #win-lose {
-  
+  font-size: 2rem;
+
 }
 
 #play-again-btn {
@@ -211,6 +213,18 @@ body {
 }
 
 #play-again-btn:hover {
-background-color: rgb(255, 114, 49);
+background-color: rgb(49, 138, 255);
 }
+#play-again-btn:active {
+  background-color: rgb(47, 131, 241);
+  }
 
+
+.scoreboard {
+  font-size: 2rem;
+  font-family: 'Fredoka One', cursive;
+  position: absolute;
+  margin-left: 1vw;
+
+
+}

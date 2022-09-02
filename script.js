@@ -3,8 +3,6 @@ const game = (() => {
     let round = 1;
     let indexes = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
-    let indexCount = 0;
-
     const Gameboard = {
         gameboard:
             [null, null, null,
