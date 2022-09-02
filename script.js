@@ -17,7 +17,7 @@ const game = (() => {
         gameState.checkWinCondition(Gameboard.gameboard);
 
 
-        let randomNum = Math.floor(Math.random() * indexes.length) + 1;
+        let randomNum = Math.floor(Math.random() * indexes.length);
 
         //index location the computer will play at on the indexes list
         let chosenIndex = indexes[randomNum];
@@ -31,7 +31,7 @@ const game = (() => {
             Gameboard.gameboard[chosenIndex] = 'O';
             indexes.splice(indexes.indexOf(chosenIndex), 1);
 
-        } else if (indexes.length === 0) {
+        }else if (indexes.length === 0) {
             return;
         }
         else {
@@ -70,19 +70,25 @@ const game = (() => {
                     roundSpan.textContent = round += 1;
                     e.target.textContent = 'X';
                     Gameboard.gameboard.splice(parseInt(e.target.id), 1, 'X');
+                    // gameState.checkWinCondition(Gameboard.gameboard);
+
                     indexes.splice(indexes.indexOf(parseInt(e.target.id)), 1);
-                    _computerPlay();
                     gameState.checkWinCondition(Gameboard.gameboard);
+                    gameState.checkTieCondition();
+                    _computerPlay();
+
 
 
 
                 }
+
             })
 
             if (count !== 9) {
                 square.textContent = Gameboard.gameboard[count];
                 count++;
             }
+            
         })
     }
     _buildBoard();
@@ -93,6 +99,9 @@ const game = (() => {
 })();
 
 const gameState = (() => {
+
+    let winnerChosen;
+
     //these numbers represent the indexes of the TTT board
     const winConditions = {
         //horizontal wins
@@ -110,11 +119,12 @@ const gameState = (() => {
         d2: [2, 4, 6],
     }
 
+    const gameboard = document.querySelectorAll('.gameboard');
+
 
     //should allow user to restart game 
     const checkWinCondition = (arr) => {
 
-        const gameboard = document.querySelectorAll('.gameboard');
 
         for (const key in winConditions) {
             const square1 = document.getElementById(winConditions[key][0]);
@@ -123,14 +133,15 @@ const gameState = (() => {
             const winColor = '#AEFF2D';
             const loseColor = '#FF2D2D';
 
-            if (arr[(winConditions[key][0])] === "X" &&
+
+if (arr[(winConditions[key][0])] === "X" &&
                 arr[(winConditions[key][1])] === "X" &&
                 arr[(winConditions[key][2])] === "X") {
                 square1.setAttribute('style', `background-color: ${winColor}`)
                 square2.setAttribute('style', `background-color: ${winColor}`)
                 square3.setAttribute('style', `background-color: ${winColor}`)
 
-
+                winnerChosen = true;
                 popUpMenu.popupBox('YOU WIN!');
             }
             else
@@ -141,11 +152,9 @@ const gameState = (() => {
                     square2.setAttribute('style', `background-color: ${loseColor}`)
                     square3.setAttribute('style', `background-color: ${loseColor}`)
 
+                    winnerChosen = true;
                     popUpMenu.popupBox('YOU LOSE');
 
-
-                }else {
-                    popUpMenu.popupBox('ITS A TIE!');
 
                 }
 
@@ -154,8 +163,18 @@ const gameState = (() => {
         }
     }
 
+    const checkTieCondition = () => {
+        if (!game.Gameboard.gameboard.includes(null) && winnerChosen !== true) {
+            popUpMenu.popupBox('ITS A TIE');
+
+        } else {
+            return;
+        }
+    }
+
     return {
         checkWinCondition,
+        checkTieCondition
     }
 })();
 
