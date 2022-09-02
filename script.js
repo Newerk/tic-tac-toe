@@ -73,12 +73,9 @@ const game = (() => {
                     // gameState.checkWinCondition(Gameboard.gameboard);
 
                     indexes.splice(indexes.indexOf(parseInt(e.target.id)), 1);
+                    _computerPlay();
                     gameState.checkWinCondition(Gameboard.gameboard);
                     gameState.checkTieCondition();
-                    _computerPlay();
-
-
-
 
                 }
 
@@ -154,8 +151,6 @@ if (arr[(winConditions[key][0])] === "X" &&
 
                     winnerChosen = true;
                     popUpMenu.popupBox('YOU LOSE');
-
-
                 }
 
 
